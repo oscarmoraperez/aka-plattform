@@ -1,0 +1,13 @@
+server:
+    port: 8081
+spring:
+    jpa:
+        generate-ddl: true
+        open-in-view: false
+    hibernate:
+        ddl-auto: create-drop
+    docker:
+        compose:
+            file: ./docker-compose.yaml
+springdoc:
+    swagger-ui.path: /order-service/swagger-ui.html

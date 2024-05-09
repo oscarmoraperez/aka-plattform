@@ -1,0 +1,5 @@
+pactbroker:
+  host: http://localhost:800
+  auth:
+    username: pact
+    password: pact
