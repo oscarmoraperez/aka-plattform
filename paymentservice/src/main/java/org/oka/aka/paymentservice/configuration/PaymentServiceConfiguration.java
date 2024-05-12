@@ -1,11 +1,10 @@
-package org.oka.aka.orderservice.configuration;
+package org.oka.aka.paymentservice.configuration;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -18,32 +17,23 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
-import static org.springframework.kafka.support.serializer.JsonDeserializer.*;
-import static org.springframework.kafka.support.serializer.JsonDeserializer.USE_TYPE_INFO_HEADERS;
 
 /**
  * Configuration of Kafka consumers and producers
  */
 @EnableKafka
 @Configuration
-public class OrderServiceConfiguration {
+public class PaymentServiceConfiguration {
     public static final String TOPIC_PAYMENTS = "payments";
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
-
-    @Bean
-    public RestTemplate restTemplate() {
-        // TODO: URL should be passed as a variable p.e. via application.properties
-        return new RestTemplateBuilder().rootUri("http://localhost:8080/").build();
-    }
 
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
@@ -70,12 +60,11 @@ public class OrderServiceConfiguration {
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         JsonDeserializer<Object> deserializer = new JsonDeserializer<>();
+        deserializer.addTrustedPackages("org.oka.aka.paymentservice.model");
 
         Map<String, Object> configProps = Map.of(
-                USE_TYPE_INFO_HEADERS, false,
-                VALUE_DEFAULT_TYPE, "org.oka.aka.orderservice.model.Payment",
                 BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
-                GROUP_ID_CONFIG, "order-service",
+                GROUP_ID_CONFIG, "payment-service",
                 AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), deserializer);

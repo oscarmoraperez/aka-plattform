@@ -9,5 +9,15 @@ spring:
     docker:
         compose:
             file: ./docker-compose.yaml
+    kafka:
+        consumer:
+            properties:
+                spring.json.trusted.packages: "org.oka.aka.paymentservice.model.Payment"
+            auto-offset-reset: earliest
+        bootstrap-servers: localhost:9092
+
+kafka:
+    bootstrapAddress: localhost:9092
+
 springdoc:
     swagger-ui.path: /payment-service/swagger-ui.html

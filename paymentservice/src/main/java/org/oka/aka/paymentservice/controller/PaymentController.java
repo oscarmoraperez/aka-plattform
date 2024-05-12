@@ -2,6 +2,8 @@ package org.oka.aka.paymentservice.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.oka.aka.paymentservice.model.Payment;
 import org.oka.aka.paymentservice.service.PaymentService;
@@ -50,7 +52,7 @@ public class PaymentController {
     @PostMapping(value = "/payments")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public @JsonView(Views.Get.class) Payment createPayment(@RequestBody @JsonView(Views.Create.class) Payment payment) {
+    public @JsonView(Views.Get.class) Payment createPayment(@Parameter(required = true, schema = @Schema()) @RequestBody @JsonView(Views.Create.class) Payment payment) {
 
         return paymentService.createPayment(payment);
     }

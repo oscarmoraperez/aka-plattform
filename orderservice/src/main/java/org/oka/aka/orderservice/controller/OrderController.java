@@ -1,6 +1,8 @@
 package org.oka.aka.orderservice.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.oka.aka.orderservice.model.OrderEntity;
 import org.oka.aka.orderservice.service.OrderService;
@@ -48,7 +50,7 @@ public class OrderController {
     @PostMapping(value = "/orders")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public @JsonView(Views.Get.class) OrderEntity createOrder(@RequestBody @JsonView(Views.Create.class) OrderEntity orderEntity) {
+    public @JsonView(Views.Get.class) OrderEntity createOrder(@Parameter(required = true, schema = @Schema()) @RequestBody @JsonView(Views.Create.class) OrderEntity orderEntity) {
 
         return orderService.createOrder(orderEntity);
     }
