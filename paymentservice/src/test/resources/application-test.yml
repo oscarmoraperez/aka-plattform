@@ -1,5 +1,26 @@
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 1s
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+  hibernate:
+    ddl-auto: create-drop
+  docker:
+    compose:
+      file: ./docker-compose.yaml
+  kafka:
+    consumer:
+      group-id: payment-service
+      properties:
+        "key.serializer": "org.springframework.kafka.support.serializer.JsonSerializer"
+        "value-deserializer": "org.springframework.kafka.support.serializer.JsonDeserializer"
+        "key.deserializer": "org.springframework.kafka.support.serializer.JsonDeserializer"
+springdoc:
+  swagger-ui.path: /payment-service/swagger-ui.html
+
 pactbroker:
-  host: http://localhost:800
+  host: http://localhost:9000
   auth:
     username: pact
     password: pact

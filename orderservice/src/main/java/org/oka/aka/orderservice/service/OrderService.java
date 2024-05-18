@@ -1,5 +1,6 @@
 package org.oka.aka.orderservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.oka.aka.orderservice.client.PaymentClient;
 import org.oka.aka.orderservice.model.OrderEntity;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
     private final PaymentClient paymentClient;
@@ -31,5 +33,13 @@ public class OrderService {
         orderEntity.setPaymentId(paymentId);
 
         return orderRepository.save(orderEntity);
+    }
+
+    public void updateOrder(int id, String newStatus) {
+        // TODO: What happens if the id is not found ?
+        orderRepository.findByPaymentId(id).ifPresent(order -> {
+            order.setStatus(newStatus);
+            orderRepository.save(order);
+        });
     }
 }

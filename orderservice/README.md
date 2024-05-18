@@ -28,3 +28,11 @@ To build and install the application:
 ```
 $ mvn clean install
 ```
+
+### Publish pacts
+
+To publish the pacts
+
+```
+$ mvn clean install pact:publish
+```

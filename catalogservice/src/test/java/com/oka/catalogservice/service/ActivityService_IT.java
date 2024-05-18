@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ActivityService_IT {
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> DB = new PostgreSQLContainer<>("postgres:16-alpine");
+    static PostgreSQLContainer<?> DB = new PostgreSQLContainer<>("postgres:16-alpine").withReuse(true);
     @Autowired
     ActivityService activityService;
 

@@ -8,14 +8,17 @@ import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.spring.junit5.MockMvcTestTarget;
 import au.com.dius.pact.provider.spring.junit5.PactVerificationSpringProvider;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.oka.aka.paymentservice.model.Payment;
 import org.oka.aka.paymentservice.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigInteger;
 
@@ -23,10 +26,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
+@AutoConfigureMockMvc
+@Testcontainers
 @Provider("payment-service")
-@PactBroker(url = "http://localhost:9000",
-        authentication = @PactBrokerAuth(username = "pact", password = "pact"))
-class ContractVerificationTest {
+@PactBroker(url = "http://localhost:9000", authentication = @PactBrokerAuth(username = "pact", password = "pact"))
+@Tag("PactTest")
+class PactContractVerificationTest {
     @MockBean
     private PaymentService paymentService;
     @Autowired

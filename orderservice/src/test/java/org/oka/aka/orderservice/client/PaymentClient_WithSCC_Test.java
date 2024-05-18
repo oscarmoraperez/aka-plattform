@@ -17,6 +17,7 @@ import java.math.BigInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = PaymentClient.class)
+// TODO: this port should be dynamic
 @AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 @ContextConfiguration(classes = PaymentClientTestConfig.class)
 public class PaymentClient_WithSCC_Test {

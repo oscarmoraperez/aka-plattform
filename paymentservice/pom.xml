@@ -92,6 +92,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
@@ -150,7 +155,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <testFramework>JUNIT5</testFramework>
-                    <baseClassForTests>org.oka.aka.paymentservice.contracttest.BaseContractTest</baseClassForTests>
+                    <baseClassForTests>org.oka.aka.paymentservice.contracttest.SccBaseContractTest</baseClassForTests>
+                    <failOnNoContracts>false</failOnNoContracts>
                 </configuration>
             </plugin>
             <plugin>
@@ -170,9 +176,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <excludedGroups>PactTest</excludedGroups>
                     <argLine>-XX:+EnableDynamicAgentLoading</argLine>
                     <systemPropertyVariables>
-                        <TESTCONTAINERS_RYUK_DISABLED>true</TESTCONTAINERS_RYUK_DISABLED>
                         <buildDirectory>${project.build.directory}</buildDirectory>
                         <pact.verifier.publishResults>true</pact.verifier.publishResults>
                         <pact.provider.version>${project.version}</pact.provider.version>

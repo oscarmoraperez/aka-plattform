@@ -7,8 +7,12 @@ import au.com.dius.pact.consumer.junit5.PactTestFor;
 import au.com.dius.pact.core.model.V4Pact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
@@ -16,8 +20,11 @@ import java.util.Map;
 
 import static au.com.dius.pact.consumer.dsl.LambdaDsl.newJsonBody;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.oka.aka.orderservice.client.PaymentClient_WithPact_Test.PaymentClientTestConfig;
 
 @PactConsumerTest
+@ContextConfiguration(classes = PaymentClientTestConfig.class)
+@Tag("PactTest")
 public class PaymentClient_WithPact_Test {
 
     @Pact(consumer = "order-service", provider = "payment-service")
@@ -56,5 +63,9 @@ public class PaymentClient_WithPact_Test {
 
         // Then
         assertThat(id).isEqualTo(1);
+    }
+
+    @Configuration
+    public static class PaymentClientTestConfig {
     }
 }

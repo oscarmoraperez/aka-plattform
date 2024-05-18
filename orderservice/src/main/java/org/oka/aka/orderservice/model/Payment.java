@@ -18,9 +18,5 @@ import java.math.BigInteger;
 @ToString
 public class Payment {
     private Integer id;
-    private BigInteger amount;
-    private String currency;
-    private String type;
-    private String cardNumber;
     private String status;
 }

@@ -1,6 +1,8 @@
 package org.oka.aka.paymentservice.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +28,7 @@ import java.math.BigInteger;
 @EqualsAndHashCode
 @Builder
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

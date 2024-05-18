@@ -3,6 +3,8 @@ package contracts.orderservice
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
+    name("shouldCreatePayment")
+
     request {
         method 'POST'
         url '/api/paymentservice/payments'
@@ -16,6 +18,7 @@ Contract.make {
             contentType('application/json')
         }
     }
+
     response {
         status OK()
         body([

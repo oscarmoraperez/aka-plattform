@@ -36,58 +36,58 @@ import static org.springframework.kafka.support.serializer.JsonDeserializer.USE_
 public class OrderServiceConfiguration {
     public static final String TOPIC_PAYMENTS = "payments";
 
-    @Value(value = "${kafka.bootstrapAddress}")
-    private String bootstrapAddress;
-
-    @Bean
-    public RestTemplate restTemplate() {
-        // TODO: URL should be passed as a variable p.e. via application.properties
-        return new RestTemplateBuilder().rootUri("http://localhost:8080/").build();
-    }
-
-    @Bean
-    public KafkaTemplate<String, Object> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
-
-    @Bean
-    public ProducerFactory<String, Object> producerFactory() {
-        Map<String, Object> configProps = Map.of(
-                BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
-                KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
-                VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        return new DefaultKafkaProducerFactory<>(configProps);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        return factory;
-    }
-
-    @Bean
-    public ConsumerFactory<String, Object> consumerFactory() {
-        JsonDeserializer<Object> deserializer = new JsonDeserializer<>();
-
-        Map<String, Object> configProps = Map.of(
-                USE_TYPE_INFO_HEADERS, false,
-                VALUE_DEFAULT_TYPE, "org.oka.aka.orderservice.model.Payment",
-                BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
-                GROUP_ID_CONFIG, "order-service",
-                AUTO_OFFSET_RESET_CONFIG, "earliest");
-
-        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), deserializer);
-    }
-
-    @Bean
-    public KafkaAdmin kafkaAdmin() {
-        return new KafkaAdmin(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress));
-    }
-
-    @Bean
-    public NewTopic payments() {
-        return new NewTopic(TOPIC_PAYMENTS, 3, (short) 1);
-    }
+//    @Value(value = "${kafka.bootstrapAddress}")
+//    private String bootstrapAddress;
+//
+//    @Bean
+//    public RestTemplate restTemplate() {
+//        // TODO: URL should be passed as a variable p.e. via application.properties
+//        return new RestTemplateBuilder().rootUri("http://localhost:8080/").build();
+//    }
+//
+//    @Bean
+//    public KafkaTemplate<String, Object> kafkaTemplate() {
+//        return new KafkaTemplate<>(producerFactory());
+//    }
+//
+//    @Bean
+//    public ProducerFactory<String, Object> producerFactory() {
+//        Map<String, Object> configProps = Map.of(
+//                BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
+//                KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
+//                VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+//        return new DefaultKafkaProducerFactory<>(configProps);
+//    }
+//
+//    @Bean
+//    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+//        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+//                new ConcurrentKafkaListenerContainerFactory<>();
+//        factory.setConsumerFactory(consumerFactory());
+//        return factory;
+//    }
+//
+//    @Bean
+//    public ConsumerFactory<String, Object> consumerFactory() {
+//        JsonDeserializer<Object> deserializer = new JsonDeserializer<>();
+//
+//        Map<String, Object> configProps = Map.of(
+//                USE_TYPE_INFO_HEADERS, false,
+//                VALUE_DEFAULT_TYPE, "org.oka.aka.orderservice.model.Payment",
+//                BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
+//                GROUP_ID_CONFIG, "order-service",
+//                AUTO_OFFSET_RESET_CONFIG, "earliest");
+//
+//        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), deserializer);
+//    }
+//
+//    @Bean
+//    public KafkaAdmin kafkaAdmin() {
+//        return new KafkaAdmin(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress));
+//    }
+//
+//    @Bean
+//    public NewTopic payments() {
+//        return new NewTopic(TOPIC_PAYMENTS, 3, (short) 1);
+//    }
 }
