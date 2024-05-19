@@ -3,7 +3,9 @@ package org.oka.aka.orderservice.client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.contract.stubrunner.StubFinder;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.oka.aka.orderservice.client.PaymentClient_WithSCC_Test.PaymentClientTestConfig;
 
 @SpringBootTest(classes = PaymentClient.class)
-// TODO: this port should be dynamic
+// TODO: this port (6565) should be dynamic
 @AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 @ContextConfiguration(classes = PaymentClientTestConfig.class)
 public class PaymentClient_WithSCC_Test {
