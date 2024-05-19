@@ -1,0 +1,13 @@
+{
+  "request": {
+    "urlPath": "/api/paymentservice/payments",
+    "method": "POST"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"id\": \"1\"}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

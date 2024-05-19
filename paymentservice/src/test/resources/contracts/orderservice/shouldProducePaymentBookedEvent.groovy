@@ -14,7 +14,7 @@ Contract.make {
     outputMessage {
         sentTo("payments")
         body([
-                id    : anyInteger(),
+                id    : 33,
                 status: "BOOKED"
         ])
     }

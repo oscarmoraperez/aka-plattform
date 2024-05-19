@@ -1,7 +1,6 @@
 package org.oka.aka.orderservice.client;
 
 import org.junit.jupiter.api.Test;
-import org.oka.aka.orderservice.client.PaymentClient_WithSCC_Test.PaymentClientTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -15,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.oka.aka.orderservice.client.PaymentClient_WithSCC_Test.PaymentClientTestConfig;
 
 @SpringBootTest(classes = PaymentClient.class)
 // TODO: this port should be dynamic

@@ -1,8 +1,9 @@
 package org.oka.aka.orderservice.listener;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.oka.aka.orderservice.model.Payment;
 import org.oka.aka.orderservice.service.OrderService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,13 @@ import static org.oka.aka.orderservice.configuration.OrderServiceConfiguration.T
 @Slf4j
 public class PaymentMessageListener {
     private final OrderService orderService;
-    @KafkaListener(topics = TOPIC_PAYMENTS, groupId = "order-service")
-    public void listenNotification(Payment data) {
-        log.info("Event received: " + data);
+    private final ObjectMapper objectMapper;
 
-        orderService.updateOrder(data.getId(), data.getStatus());
+    @KafkaListener(topics = TOPIC_PAYMENTS, groupId = "order-service")
+    public void listenPaymentEvent(String data) throws JsonProcessingException {
+        log.info("Event received: " + data);
+        Payment payment = objectMapper.readValue(data, Payment.class);
+
+        orderService.updateOrder(payment.getId(), payment.getStatus());
     }
 }

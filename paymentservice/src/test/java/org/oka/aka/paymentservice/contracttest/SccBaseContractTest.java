@@ -87,7 +87,7 @@ public class SccBaseContractTest {
 
     public void bookPayment() {
 
-        Payment booked = builder().id(1).status("BOOKED").build();
+        Payment booked = builder().id(33).status("BOOKED").build();
         paymentService.sendPayment(booked);
     }
 
