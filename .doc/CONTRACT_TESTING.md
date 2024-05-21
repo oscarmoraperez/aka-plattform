@@ -66,7 +66,43 @@ public class SccBaseContractTest {
     }
 
     static class KafkaMessageVerifier implements MessageVerifierReceiver<Message<?>> {
-        //
+        private static final Log LOG = LogFactory.getLog(KafkaMessageVerifier.class);
+
+        Map<String, BlockingQueue<Message<?>>> broker = new ConcurrentHashMap<>();
+
+
+        @Override
+        public Message receive(String destination, long timeout, TimeUnit timeUnit, @Nullable YamlContract contract) {
+            broker.putIfAbsent(destination, new ArrayBlockingQueue<>(1));
+            BlockingQueue<Message<?>> messageQueue = broker.get(destination);
+            Message<?> message;
+            try {
+                message = messageQueue.poll(timeout, timeUnit);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (message != null) {
+                LOG.info("Removed a message from a topic [" + destination + "]");
+                LOG.info(message.getPayload().toString());
+            }
+            return message;
+        }
+
+
+        @KafkaListener(id = "orderContractTestListener", topics = {"payments"})
+        public void listen(ConsumerRecord payload, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+            LOG.info("Got a message from a topic [" + topic + "]");
+            Map<String, Object> headers = new HashMap<>();
+            new DefaultKafkaHeaderMapper().toHeaders(payload.headers(), headers);
+            broker.putIfAbsent(topic, new ArrayBlockingQueue<>(1));
+            BlockingQueue<Message<?>> messageQueue = broker.get(topic);
+            messageQueue.add(MessageBuilder.createMessage(payload.value(), new MessageHeaders(headers)));
+        }
+
+        @Override
+        public Message receive(String destination, YamlContract contract) {
+            return receive(destination, 15, TimeUnit.SECONDS, contract);
+        }
     }
 }
 ```

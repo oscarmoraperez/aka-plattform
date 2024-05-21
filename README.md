@@ -33,3 +33,7 @@ graph LR
 ## Contract Testing
 
 The distributed service based design of the AKA platform makes it a good playground to experiment with Contract Testing. To get more insights, please have a look to [CONTRACT_TESTING.md](.doc/CONTRACT_TESTING.md)
+
+## Test Containers
+
+## Spring for docker compose
