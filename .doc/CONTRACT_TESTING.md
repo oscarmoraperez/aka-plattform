@@ -139,35 +139,32 @@ Notice how the stubs are defined by the ids: ```org.oka.aka:paymentservice``` to
 Following the test:
 
 ```java
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@AutoConfigureMockMvc
-@AutoConfigureWireMock(port = 8080, stubs = "classpath:stubs/*.json")
-@Testcontainers
-public class OrderEntityController_Test {
-    @Container
-    @ServiceConnection
-    static PostgreSQLContainer<?> DB = new PostgreSQLContainer<>("postgres:16-alpine").withReuse(true);
+package org.oka.aka.orderservice.client;
 
+@SpringBootTest(classes = PaymentClient.class)
+@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
+@ContextConfiguration(classes = PaymentClientTestConfig.class)
+public class PaymentClient_WithSCC_Test {
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private OrderRepository repository;
-    @Autowired
-    ObjectMapper mapper;
+    PaymentClient paymentClient;
 
     @Test
-    void shouldCreateANewPayment() throws Exception {
+    void shouldReturnPaymentId() {
         // Given
-        var order = genOrder();
 
-        // when
-        ResultActions resultActions = this.mockMvc.perform(
-                        post("/api/orderservice/orders")
-                                .contentType(APPLICATION_JSON)
-                                .content(mapper.writeValueAsString(order)))
-                .andDo(print())
-                .andExpect(status().isOk());
+        // When
+        int id = paymentClient.createPayment(BigInteger.valueOf(15), "CHF", "CREDIT_CARD", "1234567890123");
+
+        // Then
+        assertThat(id).isGreaterThan(0);
+    }
+
+    @Configuration
+    public static class PaymentClientTestConfig {
+        @Bean
+        RestTemplate restTemplate() {
+            return new RestTemplateBuilder().rootUri("http://localhost:6565").build();
+        }
     }
 }
 ```
