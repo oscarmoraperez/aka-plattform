@@ -167,7 +167,7 @@ This will generate the stubs and install them in the LOCAL repository.
 We have to create a new integration test using the annotation:
 
 ```java
-@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
+@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:1.0-SNAPSHOT:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 ```
 
 Notice how the stubs are defined by the ids: ```org.oka.aka:paymentservice``` to be run in the port 6565. (This port can be defined to be randomized)
@@ -178,7 +178,7 @@ Following the test:
 package org.oka.aka.orderservice.client;
 
 @SpringBootTest(classes = PaymentClient.class)
-@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
+@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:1.0-SNAPSHOT:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 @ContextConfiguration(classes = PaymentClientTestConfig.class)
 public class PaymentClient_WithSCC_Test {
     @Autowired

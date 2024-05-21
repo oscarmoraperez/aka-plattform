@@ -159,16 +159,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-contract-maven-plugin</artifactId>
-                <version>4.1.2</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <testFramework>JUNIT5</testFramework>
-                    <failOnNoContracts>false</failOnNoContracts>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>

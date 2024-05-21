@@ -37,7 +37,7 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 import static org.springframework.messaging.support.MessageBuilder.createMessage;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {OrderServiceApplication.class, TestConfig.class})
-@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
+@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:1.0-SNAPSHOT:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 @Testcontainers
 public class PaymentMessageListener_WithSCC_Test {
     @Container

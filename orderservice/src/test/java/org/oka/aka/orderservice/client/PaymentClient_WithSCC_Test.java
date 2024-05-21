@@ -20,7 +20,7 @@ import static org.oka.aka.orderservice.client.PaymentClient_WithSCC_Test.Payment
 
 @SpringBootTest(classes = PaymentClient.class)
 // TODO: this port (6565) should be dynamic
-@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:+:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
+@AutoConfigureStubRunner(ids = {"org.oka.aka:paymentservice:1.0-SNAPSHOT:stubs:6565"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 @ContextConfiguration(classes = PaymentClientTestConfig.class)
 public class PaymentClient_WithSCC_Test {
     @Autowired
