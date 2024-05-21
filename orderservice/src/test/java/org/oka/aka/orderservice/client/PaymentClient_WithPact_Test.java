@@ -59,10 +59,11 @@ public class PaymentClient_WithPact_Test {
         PaymentClient paymentClient = new PaymentClient(restTemplate);
 
         // When
-        int id = paymentClient.createPayment(BigInteger.valueOf(15), "CHF", "CREDIT_CARD", "1234567890123");
+        PaymentResponse payment = paymentClient.createPayment(BigInteger.valueOf(15), "CHF", "CREDIT_CARD", "1234567890123");
 
         // Then
-        assertThat(id).isEqualTo(1);
+        assertThat(payment.getId()).isEqualTo(1);
+        assertThat(payment.getStatus()).isEqualTo("CREATED");
     }
 
     @Configuration

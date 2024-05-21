@@ -31,10 +31,11 @@ public class PaymentClient_WithSCC_Test {
         // Given
 
         // When
-        int id = paymentClient.createPayment(BigInteger.valueOf(15), "CHF", "CREDIT_CARD", "1234567890123");
+        PaymentResponse payment = paymentClient.createPayment(BigInteger.valueOf(15), "CHF", "CREDIT_CARD", "1234567890123");
 
         // Then
-        assertThat(id).isGreaterThan(0);
+        assertThat(payment.getId()).isGreaterThan(0);
+        assertThat(payment.getStatus()).isEqualTo("CREATED");
     }
 
     @Configuration

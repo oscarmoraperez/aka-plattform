@@ -29,7 +29,7 @@ public class OrderService {
     // TODO: This is not robust, 2 remote systems informed in the same time. Consider 2PC or TransactionalOutbox
     public OrderEntity createOrder(OrderEntity orderEntity) {
         orderEntity.setStatus("CREATED");
-        Integer paymentId = paymentClient.createPayment(orderEntity.getPrice(), orderEntity.getCurrency(), "CREDIT_CARD", orderEntity.getCardNumber());
+        Integer paymentId = paymentClient.createPayment(orderEntity.getPrice(), orderEntity.getCurrency(), "CREDIT_CARD", orderEntity.getCardNumber()).getId();
         orderEntity.setPaymentId(paymentId);
 
         return orderRepository.save(orderEntity);
