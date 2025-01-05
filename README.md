@@ -19,7 +19,7 @@ Notice that not all the services are yet implemented. It is a work in progress
 
 ```mermaid
 graph LR
-    gateway-service:::not_implemented -- REST --> catalog-service:::implemented;
+    gateway-service:::implemented -- REST --> catalog-service:::implemented;
     catalog-service:::implemented -- REST --> order-service:::implemented;
     catalog-service:::implemented -- REST --> recommendation-service:::not_implemented;
     order-service -- REST --> payment-service:::implemented;
