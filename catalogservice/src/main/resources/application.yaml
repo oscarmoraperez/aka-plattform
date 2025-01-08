@@ -6,8 +6,7 @@ spring:
         open-in-view: false
     hibernate:
         ddl-auto: create-drop
-    docker:
-        compose:
-            file: ./docker-compose.yaml
+    profiles:
+        active: h2
 springdoc:
     swagger-ui.path: /catalog-service/swagger-ui.html
